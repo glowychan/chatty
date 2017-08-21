@@ -3,11 +3,19 @@ import ChatBar from './ChatBar.jsx';
 import MessageList from './MessageList.jsx';
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentUser: "Anonymous"
+    };
+  }
+
   render() {
     return (
       <div>
         <MessageList />
-        <ChatBar />
+        <ChatBar currentUser={this.state.currentUser} />
       </div>
     );
   }
