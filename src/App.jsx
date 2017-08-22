@@ -9,18 +9,7 @@ class App extends Component {
     this.state = {
       // socket: 'ws://localhost:3001',
       currentUser: {name: "Bob"},
-      messages: [
-        {
-          id: 1,
-          username: "Bob",
-          content: "Has anyone seen my marbles?",
-        },
-        {
-          id: 2,
-          username: "Anonymous",
-          content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
-        }
-      ]
+      messages: []
     };
      this.handleSubmit = this.handleSubmit.bind(this);
   }
