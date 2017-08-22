@@ -21,26 +21,51 @@ class App extends Component {
         }
       ]
     };
+
+      // This binding is necessary to make `this` work in the callback
+     // this.handleNameChange = this.handleNameChange.bind(this);
+     // this.handleNewMessage = this.handleNewMessage.bind(this);
+     this.handleSubmit = this.handleSubmit.bind(this);
+     this.updateMessages = this.updateMessages.bind(this);
   }
 
-  componentDidMount() {
-    console.log("componentDidMount <App />");
-    setTimeout(() => {
-      console.log("Simulating incoming message");
-      // Add a new message to the list of messages in the data store
-      const newMessage = {id: 3, username: "Michelle", content: "Hello there!"};
-      const messages = this.state.messages.concat(newMessage)
-      // Update the state of the app component.
-      // Calling setState will trigger a call to render() in App and all child components.
-      this.setState({messages: messages})
-    }, 3000);
+/*
+  handleSubmit(username, content) {
+    this.setState({
+      username: username,
+      content: content
+    });
+    console.log(username, content);
+
   }
+*/
+
+  updateMessages(newMsg) {
+    const changedMessages = this.state.messages.concat(newMsg);
+    this.setState({ messages: changedMessages  })
+  }
+
+  handleSubmit(username, content) {
+    let message = {
+      username: username,
+      content: content
+    };
+    console.log(username, content);
+    console.log(message);
+
+    this.updateMessages(message);
+  }
+
 
   render() {
     return (
       <div>
         <MessageList messages={this.state.messages} />
-        <ChatBar currentUser={this.state.currentUser} />
+        <ChatBar currentUser={this.state.currentUser}
+                 //handleNameChange={this.handleNameChange}
+                 //handleNewMessage={this.handleNewMessage}
+                 handleSubmit={this.handleSubmit} />
+
       </div>
     );
   }
