@@ -21,6 +21,10 @@ wss.on('connection', (ws) => {
 
   ws.on('message', function incoming(message) {
     console.log('received: %s', message);
+    // JSON.parse(message) ?
+    // maybe send back as json.parse...
+    let newMessage = JSON.parse(message);
+    console.log(newMessage.username + ' says ' + newMessage.content);
   });
 
   ws.send('something');
