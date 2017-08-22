@@ -28,7 +28,11 @@ class ChatBar extends Component {
     if (event.key === 'Enter') {
       console.log(event.target.value);
       this.props.handleSubmit(this.state.username, this.state.content);
+      this.setState({
+        content: ''
+      })
     }
+
   }
 
   // maybe don't have to update parent component App until onSubmit

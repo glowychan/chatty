@@ -26,7 +26,7 @@ class App extends Component {
      // this.handleNameChange = this.handleNameChange.bind(this);
      // this.handleNewMessage = this.handleNewMessage.bind(this);
      this.handleSubmit = this.handleSubmit.bind(this);
-     this.updateMessages = this.updateMessages.bind(this);
+     //this.updateMessages = this.updateMessages.bind(this);
   }
 
 /*
