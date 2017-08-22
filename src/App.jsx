@@ -7,6 +7,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      // socket: 'ws://localhost:3001',
       currentUser: {name: "Bob"},
       messages: [
         {
@@ -21,24 +22,8 @@ class App extends Component {
         }
       ]
     };
-
-      // This binding is necessary to make `this` work in the callback
-     // this.handleNameChange = this.handleNameChange.bind(this);
-     // this.handleNewMessage = this.handleNewMessage.bind(this);
      this.handleSubmit = this.handleSubmit.bind(this);
-     //this.updateMessages = this.updateMessages.bind(this);
   }
-
-/*
-  handleSubmit(username, content) {
-    this.setState({
-      username: username,
-      content: content
-    });
-    console.log(username, content);
-
-  }
-*/
 
   updateMessages(newMsg) {
     const changedMessages = this.state.messages.concat(newMsg);
@@ -50,10 +35,17 @@ class App extends Component {
       username: username,
       content: content
     };
-    console.log(username, content);
-    console.log(message);
 
+    this.socket.send(JSON.stringify(message));
     this.updateMessages(message);
+  }
+  //does this go in componentdidmount?
+
+  componentDidMount() {
+    console.log("componentDidMount <App />");
+    this.socket = new WebSocket('ws://localhost:3001');
+    console.log(this.socket);
+    console.log('connected to server');
   }
 
 
@@ -62,8 +54,6 @@ class App extends Component {
       <div>
         <MessageList messages={this.state.messages} />
         <ChatBar currentUser={this.state.currentUser}
-                 //handleNameChange={this.handleNameChange}
-                 //handleNewMessage={this.handleNewMessage}
                  handleSubmit={this.handleSubmit} />
 
       </div>
