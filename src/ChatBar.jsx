@@ -3,54 +3,47 @@ import React, { Component } from 'react';
 class ChatBar extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      username: "Anonymous",
       content: ''
     };
-
-    // this.onNameInput = this.onNameInput.bind(this); why don't i need this?
+    this.onMessageInput = this.onMessageInput.bind(this);
   }
 
-  onNameInput(username) {
-    this.setState({username});
-    // this.props.handleNameChange(username); // From parent
-    console.log(username); //test
+  onMessageInput(e) {
+    this.setState({ content: e.target.value });
   }
 
-  onMessageInput(content) {
-    this.setState({content});
-    // this.props.handleNewMessage(content); // From parent
-    console.log(content); //test
-  }
+  handleMsgKeypress(e) {
+    const { content } = this.state;
+    const { currentUser, handleSubmit } = this.props;
+    const username = currentUser ? currentUser.name : 'Anonymous';
 
-  handleMsgKeypress(event) {
-    if (event.key === 'Enter') {
-      console.log(event.target.value);
-      this.props.handleSubmit(this.state.username, this.state.content);
-      this.setState({
-        content: ''
-      })
+    if (e.keyCode === 13) { // on 'Enter' pressed
+      handleSubmit(username, content); // creates a new message in App's message list
+      this.setState({ content: '' }); // reset message content
     }
-
   }
-
-  // maybe don't have to update parent component App until onSubmit
-  // then onSubmit pushes the data to the array
 
   render() {
+    const { currentUser, onNameChange } = this.props;
+    const { content } = this.state;
+    const username = currentUser ? currentUser.name : 'Anonymous';
+
     return (
       <footer className="chatbar">
-        <input className="chatbar-username"
-               placeholder={this.props.currentUser.name}
-               value={this.state.username}
-               onChange={ event => this.onNameInput(event.target.value) } />
-        <input className="chatbar-message"
-               placeholder="Type a message and hit ENTER"
-               value={this.state.content}
-               onChange={ event => this.onMessageInput(event.target.value) }
-               onKeyUp={this.handleMsgKeypress.bind(this)}
-              />
+        <input
+          className="chatbar-username"
+          placeholder={username}
+          value={username}
+          onChange={onNameChange}
+        />
+        <input
+          className="chatbar-message"
+          placeholder="Type a message and hit ENTER"
+          value={content}
+          onChange={ this.onMessageInput }
+          onKeyUp={this.handleMsgKeypress.bind(this)}
+        />
       </footer>
     );
   }

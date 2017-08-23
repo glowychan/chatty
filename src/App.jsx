@@ -3,20 +3,25 @@ import ChatBar from './ChatBar.jsx';
 import MessageList from './MessageList.jsx';
 
 class App extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      // socket: 'ws://localhost:3001',
-      currentUser: {name: "Bob"},
+      currentUser: { name: 'Bob' },
       messages: []
     };
-     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onNameInput = this.onNameInput.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   updateMessages(newMsg) {
     const changedMessages = this.state.messages.concat(newMsg);
-    this.setState({ messages: changedMessages  })
+    this.setState({ messages: changedMessages });
+  }
+
+  onNameInput(e) {
+    this.setState({
+      currentUser: { name: e.target.value }
+    });
   }
 
   handleSubmit(username, content) {
@@ -28,13 +33,9 @@ class App extends Component {
     this.socket.send(JSON.stringify(message));
     this.updateMessages(message);
   }
-  //does this go in componentdidmount?
 
   componentDidMount() {
-    console.log("componentDidMount <App />");
     this.socket = new WebSocket('ws://localhost:3001');
-    console.log(this.socket);
-    console.log('connected to server');
   }
 
 
@@ -42,11 +43,14 @@ class App extends Component {
     return (
       <div>
         <MessageList messages={this.state.messages} />
-        <ChatBar currentUser={this.state.currentUser}
-                 handleSubmit={this.handleSubmit} />
-
+        <ChatBar
+          currentUser={this.state.currentUser}
+          handleSubmit={this.handleSubmit}
+          onNameChange={this.onNameInput}
+        />
       </div>
     );
   }
 }
+
 export default App;
