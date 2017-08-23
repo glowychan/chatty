@@ -9,19 +9,12 @@ class App extends Component {
       currentUser: { name: 'Bob' },
       messages: []
     };
-    this.onNameInput = this.onNameInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   updateMessages(newMsg) {
     const changedMessages = this.state.messages.concat(newMsg);
     this.setState({ messages: changedMessages });
-  }
-
-  onNameInput(e) {
-    this.setState({
-      currentUser: { name: e.target.value }
-    });
   }
 
   handleSubmit(username, content) {
@@ -46,7 +39,6 @@ class App extends Component {
         <ChatBar
           currentUser={this.state.currentUser}
           handleSubmit={this.handleSubmit}
-          onNameChange={this.onNameInput}
         />
       </div>
     );

@@ -4,9 +4,15 @@ class ChatBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      username: props.currentUser ? props.currentUser.name : 'Anonymous',
       content: ''
     };
+    this.onNameInput = this.onNameInput.bind(this);
     this.onMessageInput = this.onMessageInput.bind(this);
+  }
+
+  onNameInput(e) {
+    this.setState({ username: e.target.value });
   }
 
   onMessageInput(e) {
@@ -14,28 +20,24 @@ class ChatBar extends Component {
   }
 
   handleMsgKeypress(e) {
-    const { content } = this.state;
-    const { currentUser, handleSubmit } = this.props;
-    const username = currentUser ? currentUser.name : 'Anonymous';
-
-    if (e.keyCode === 13) { // on 'Enter' pressed
-      handleSubmit(username, content); // creates a new message in App's message list
-      this.setState({ content: '' }); // reset message content
+    const { username, content } = this.state;
+    if (e.keyCode === 13) {
+      this.props.handleSubmit(username, content);
+      this.setState({ content: '' });
     }
   }
 
   render() {
-    const { currentUser, onNameChange } = this.props;
-    const { content } = this.state;
-    const username = currentUser ? currentUser.name : 'Anonymous';
+    const { currentUser } = this.props;
+    const { username, content } = this.state;
 
     return (
       <footer className="chatbar">
         <input
           className="chatbar-username"
-          placeholder={username}
+          placeholder={currentUser.name}
           value={username}
-          onChange={onNameChange}
+          onChange={this.onNameInput}
         />
         <input
           className="chatbar-message"
