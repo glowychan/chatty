@@ -9,13 +9,13 @@ const MessageList = ({ messages }) => (
           return <Message
             content={message.content}
             username={message.username}
-            key={index}
+            key={message.id}
           />
         } else if (message.type === 'incomingNotification') {
           return <div className="message system">
             <Message
               content={message.content}
-              key={index}
+              key={message.id}
             />
           </div>
         }

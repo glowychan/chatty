@@ -34,6 +34,7 @@ wss.on('connection', (ws) => {
       wss.broadcast(JSON.stringify(parsedObject));
     } else if (parsedMessage.type === 'postNotification' ) {
       let parsedObject = {
+        id: uuidv1(),
         content: parsedMessage.content,
         type: "incomingNotification"
       };
