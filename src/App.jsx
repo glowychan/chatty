@@ -19,10 +19,12 @@ class App extends Component {
     });
   }
 
+/*
   updateMessages(newMsg) {
     const changedMessages = this.state.messages.concat(newMsg);
     this.setState({ messages: changedMessages });
   }
+  */
 
   handleSubmit(username, content) {
     let message = {
@@ -31,7 +33,13 @@ class App extends Component {
     };
 
     this.socket.send(JSON.stringify(message));
-    this.updateMessages(message);
+
+    // this.updateMessages(message);
+    this.socket.onmessage = (e) => {
+      const parsedMessage = JSON.parse(e.data);
+      const newMessages = this.state.messages.concat(parsedMessage);
+      this.setState({ messages: newMessages });
+    }
   }
 
   componentDidMount() {
