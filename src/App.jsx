@@ -19,33 +19,35 @@ class App extends Component {
     });
   }
 
-/*
-  updateMessages(newMsg) {
-    const changedMessages = this.state.messages.concat(newMsg);
-    this.setState({ messages: changedMessages });
-  }
-  */
-
   handleSubmit(username, content) {
     let message = {
       username: username,
-      content: content
+      content: content,
+      type: "postMessage"
     };
 
     this.socket.send(JSON.stringify(message));
-
-    // this.updateMessages(message);
-    this.socket.onmessage = (e) => {
-      const parsedMessage = JSON.parse(e.data);
-      const newMessages = this.state.messages.concat(parsedMessage);
-      this.setState({ messages: newMessages });
-    }
   }
 
   componentDidMount() {
     this.socket = new WebSocket('ws://localhost:3001');
-  }
 
+    this.socket.onmessage = (e) => {
+      const data = JSON.parse(e.data);
+      switch(data.type) {
+        case "incomingMessage":
+          const newMessages = this.state.messages.concat(data);
+          this.setState({ messages: newMessages });
+          break;
+        case "incomingNotification":
+        // handle incoming notification
+        break;
+      default:
+        // show an error in the console if the message type is unknown
+        throw new Error("Unknown event type " + data.type);
+      }
+    };
+  }
 
   render() {
     return (
