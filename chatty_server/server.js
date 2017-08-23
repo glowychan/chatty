@@ -37,8 +37,7 @@ wss.on('connection', (ws) => {
         content: parsedMessage.content,
         type: "incomingNotification"
       };
-      console.log(parsedObject);
-      console.log(`User changed name to ${parsedObject.username}`);
+
       wss.broadcast(JSON.stringify(parsedObject));
     }
   });
