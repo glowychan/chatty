@@ -20,6 +20,7 @@ const wss = new SocketServer({ server });
 // the ws parameter in the callback.
 wss.on('connection', (ws) => {
   console.log('Client connected');
+  console.log(wss.clients.size);
   ws.on('message', function incoming(message) {
     let parsedMessage = JSON.parse(message)
 

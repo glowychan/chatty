@@ -7,6 +7,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      onlineCount: 1,
       currentUser: { name: 'Anonymous' },
       messages: []
     };
@@ -58,7 +59,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <NavBar />
+        <NavBar countUser={this.state.onlineCount} />
         <MessageList messages={this.state.messages} />
         <ChatBar
           currentUser={this.state.currentUser.name}
