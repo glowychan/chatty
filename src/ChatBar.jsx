@@ -22,8 +22,7 @@ class ChatBar extends Component {
 
   handleNameKeypress(e) {
     if (e.keyCode === 13 && e.target.value.length > 0) {
-      //this.props.handleMsgSubmit(this.state.content);
-      this.props.handleNameChange( e.target.value );
+      this.props.handleNameChange(e.target.value);
     }
   }
 
@@ -44,7 +43,7 @@ class ChatBar extends Component {
           className="chatbar-message"
           placeholder="Type a message and hit ENTER"
           value={content}
-          onChange={ this.onMessageInput }
+          onChange={this.onMessageInput}
           onKeyUp={this.handleMsgKeypress.bind(this)}
         />
       </footer>
