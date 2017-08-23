@@ -15,7 +15,6 @@ class App extends Component {
 
   handleNameSubmit(name) {
     let message = {
-      //username: name, //this.state.currentUser.name,
       content: `${this.state.currentUser.name} has changed name to ${name}`,
       type: "postNotification"
     };
@@ -46,14 +45,10 @@ class App extends Component {
           this.setState({ messages: newMessages });
           break;
         case "incomingNotification":
-          // handle incoming notification
-          //this.setState({currentUser: { name: data.username }});
-          // const newNotification = this.state.message
           const newNotifications = this.state.messages.concat(data);
           this.setState({ messages: newNotifications });
         break;
       default:
-        // show an error in the console if the message type is unknown
         throw new Error("Unknown event type " + data.type);
       }
     };
