@@ -15,14 +15,14 @@ class ChatBar extends Component {
 
   handleMsgKeypress(e) {
     if (e.keyCode === 13) {
-      this.props.handleSubmit(this.state.content);
+      this.props.handleMsgSubmit(this.state.content);
       this.setState({ content: '' });
     }
   }
 
   handleNameKeypress(e) {
     if (e.keyCode === 13) {
-      this.props.handleSubmit(this.state.content);
+      //this.props.handleMsgSubmit(this.state.content);
       this.props.handleNameChange( e.target.value );
     }
   }
@@ -36,7 +36,7 @@ class ChatBar extends Component {
       <footer className="chatbar">
         <input
           className="chatbar-username"
-          placeholder={username}
+          placeholder="Anonymous"
           value={username}
           onKeyUp={this.handleNameKeypress.bind(this)}
         />

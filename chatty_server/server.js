@@ -19,26 +19,34 @@ const wss = new SocketServer({ server });
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
 
-let chatHistory = [];
-
 wss.on('connection', (ws) => {
   console.log('Client connected');
 
   ws.on('message', function incoming(message) {
     let parsedMessage = JSON.parse(message)
-    let parsedObject = {
-      id: uuidv1(),
-      username: parsedMessage.username,
-      content: parsedMessage.content,
-      type: "incomingMessage"
-    };
 
-    chatHistory.push(parsedObject);
-    console.log(chatHistory);
+    if (parsedMessage.type === 'postMessage') {
+      let parsedObject = {
+        id: uuidv1(),
+        username: parsedMessage.username,
+        content: parsedMessage.content,
+        type: "incomingMessage"
+      };
+      console.log(`User ${parsedObject.username} said ${parsedObject.content}`);
+      wss.broadcast(JSON.stringify(parsedObject));
+    } else if (parsedMessage.type === 'postNotification' ) {
+      let parsedObject = {
+        id: uuidv1(),
+        username: parsedMessage.username,
+        // content: parsedMessage.content,
+        type: "incomingNotification"
+      };
+      console.log(parsedObject);
+      console.log(`User changed name to ${parsedObject.username}`);
+      wss.broadcast(JSON.stringify(parsedObject));
+    }
 
-    console.log(`User ${parsedObject.username} said ${parsedObject.content}`);
-    //ws.send(JSON.stringify(parsedObject));
-    wss.broadcast(JSON.stringify(parsedObject));
+    // wss.broadcast(JSON.stringify(parsedObject));
   });
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.

@@ -9,20 +9,23 @@ class App extends Component {
       currentUser: { name: 'Anonymous' },
       messages: []
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.onNameInput = this.onNameInput.bind(this);
+    this.handleMsgSubmit = this.handleMsgSubmit.bind(this);
+    this.handleNameSubmit = this.handleNameSubmit.bind(this);
   }
 
-  onNameInput(name) {
+  handleNameSubmit(name) {
     let message = {
-      username: this.state.currentUser.name,
+      username: name, //this.state.currentUser.name,
+      // content: `${this.state.currentUser.name} has changed name to {name},`
       type: "postNotification"
     };
+
+    this.setState({currentUser: {name: name}});
 
     this.socket.send(JSON.stringify(message))
   }
 
-  handleSubmit(content) {
+  handleMsgSubmit(content) {
     let message = {
       username: this.state.currentUser.name,
       content: content,
@@ -59,8 +62,8 @@ class App extends Component {
         <MessageList messages={this.state.messages} />
         <ChatBar
           currentUser={this.state.currentUser.name}
-          handleNameChange={this.onNameInput}
-          handleSubmit={this.handleSubmit}
+          handleNameChange={this.handleNameSubmit}
+          handleMsgSubmit={this.handleMsgSubmit}
         />
       </div>
     );
