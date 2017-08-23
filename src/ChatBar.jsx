@@ -21,7 +21,7 @@ class ChatBar extends Component {
   }
 
   handleNameKeypress(e) {
-    if (e.keyCode === 13) {
+    if (e.keyCode === 13 && e.target.value.length > 0) {
       //this.props.handleMsgSubmit(this.state.content);
       this.props.handleNameChange( e.target.value );
     }

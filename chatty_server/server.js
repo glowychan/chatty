@@ -37,8 +37,8 @@ wss.on('connection', (ws) => {
     } else if (parsedMessage.type === 'postNotification' ) {
       let parsedObject = {
         id: uuidv1(),
-        username: parsedMessage.username,
-        // content: parsedMessage.content,
+        // username: parsedMessage.username,
+        content: parsedMessage.content,
         type: "incomingNotification"
       };
       console.log(parsedObject);
