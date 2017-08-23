@@ -8,8 +8,3 @@ const Message = ({ username, content }) => (
 );
 
 export default Message;
-
-// if username has changed return
-// <div class="message system">
-//  Anonymous1 changed their name to nomnom.
-// </div>
