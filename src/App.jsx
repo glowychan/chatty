@@ -13,15 +13,18 @@ class App extends Component {
     this.onNameInput = this.onNameInput.bind(this);
   }
 
-  onNameInput(e) {
-    this.setState({
-      currentUser: { name: e.target.value }
-    });
+  onNameInput(name) {
+    let message = {
+      username: this.state.currentUser.name,
+      type: "postNotification"
+    };
+
+    this.socket.send(JSON.stringify(message))
   }
 
-  handleSubmit(username, content) {
+  handleSubmit(content) {
     let message = {
-      username: username,
+      username: this.state.currentUser.name,
       content: content,
       type: "postMessage"
     };
@@ -40,7 +43,8 @@ class App extends Component {
           this.setState({ messages: newMessages });
           break;
         case "incomingNotification":
-        // handle incoming notification
+          // handle incoming notification
+          this.setState({currentUser: { name: data.username }});
         break;
       default:
         // show an error in the console if the message type is unknown
@@ -54,8 +58,8 @@ class App extends Component {
       <div>
         <MessageList messages={this.state.messages} />
         <ChatBar
-          currentUser={this.state.currentUser}
-          onNameChange={this.onNameInput}
+          currentUser={this.state.currentUser.name}
+          handleNameChange={this.onNameInput}
           handleSubmit={this.handleSubmit}
         />
       </div>
