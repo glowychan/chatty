@@ -21,7 +21,7 @@ class App extends Component {
       type: "postNotification"
     };
 
-    this.setState({currentUser: {name: name}}); //color is current color?
+    this.setState({currentUser: {name: name, color: 'red'}}); //should be what the server gives you
 
     this.socket.send(JSON.stringify(message))
   }
@@ -41,8 +41,6 @@ class App extends Component {
 
     this.socket.onmessage = (e) => {
       const data = JSON.parse(e.data);
-      console.log(data.type);
-      console.log(data.count);
       switch(data.type) {
         case "userNotification":
           this.setState({ onlineCount: data.count });
