@@ -7,7 +7,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      onlineCount: 1,
+      onlineCount: 0,
       currentUser: { name: 'Anonymous' },
       messages: []
     };
@@ -41,7 +41,16 @@ class App extends Component {
 
     this.socket.onmessage = (e) => {
       const data = JSON.parse(e.data);
+      //console.log(data);
+      //console.log(data.onlineCount);
+      console.log(data.type);
+      console.log(data.count);
       switch(data.type) {
+        case "userNotification":
+          //const newCount = this.state.onlineCount(data.count);
+          //this.setState({ count: newCount });
+          this.setState({ onlineCount: data.count });
+          break;
         case "incomingMessage":
           const newMessages = this.state.messages.concat(data);
           this.setState({ messages: newMessages });
@@ -49,9 +58,10 @@ class App extends Component {
         case "incomingNotification":
           const newNotifications = this.state.messages.concat(data);
           this.setState({ messages: newNotifications });
-        break;
+          break;
       default:
-        throw new Error("Unknown event type " + data.type);
+        //throw new Error("Unknown event type " + data.type);
+        console.log(data);
       }
     };
   }
