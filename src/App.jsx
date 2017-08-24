@@ -20,8 +20,8 @@ class App extends Component {
       content: `${this.state.currentUser.name} has changed name to ${name}`,
       type: "postNotification"
     };
-
-    this.setState({currentUser: {name: name, color: 'red'}}); //should be what the server gives you
+    let color = this.state.currentUser.color;
+    this.setState({currentUser: {name: name, color: color}}); //should be what the server gives you
 
     this.socket.send(JSON.stringify(message))
   }
@@ -53,8 +53,9 @@ class App extends Component {
           const newNotifications = this.state.messages.concat(data);
           this.setState({ messages: newNotifications });
           break;
-        // case "sendColor":
-        // this.setState({ color: data.color }); but what about the name
+        case "sendColor":
+          let name = this.state.currentUser.name;
+          this.setState({currentUser: {name: name, color: data.color}});
       default:
         throw new Error("Unknown event type " + data.type);
       }
