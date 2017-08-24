@@ -8,7 +8,7 @@ class App extends Component {
     super(props);
     this.state = {
       onlineCount: 0,
-      currentUser: { name: 'Anonymous', color: 'red' },
+      currentUser: { name: 'Anonymous', color: '#FF9C00' },
       messages: []
     };
     this.handleMsgSubmit = this.handleMsgSubmit.bind(this);
@@ -21,7 +21,7 @@ class App extends Component {
       type: "postNotification"
     };
     let color = this.state.currentUser.color;
-    this.setState({currentUser: {name: name, color: color}}); //should be what the server gives you
+    this.setState({currentUser: {name: name, color: color}});
 
     this.socket.send(JSON.stringify(message))
   }
