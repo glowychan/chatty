@@ -20,16 +20,14 @@ const wss = new SocketServer({ server });
 // the ws parameter in the callback.
 wss.on('connection', (ws) => {
   console.log('Client connected');
+  let onlineCount = {
+    count: wss.clients.size,
+    type: "userNotification"
+  };
+  wss.broadcast(JSON.stringify(onlineCount));
 
   ws.on('message', function incoming(message) {
-    let onlineCount = {
-      count: wss.clients.size,
-      type: "userNotification"
-    };
-    wss.broadcast(JSON.stringify(onlineCount));
-
     let parsedMessage = JSON.parse(message)
-
     if (parsedMessage.type === 'postMessage') {
       let parsedObject = {
         id: uuidv1(),
@@ -45,7 +43,6 @@ wss.on('connection', (ws) => {
         content: parsedMessage.content,
         type: "incomingNotification"
       };
-
       wss.broadcast(JSON.stringify(parsedObject));
     }
   });

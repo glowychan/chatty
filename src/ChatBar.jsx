@@ -35,7 +35,7 @@ class ChatBar extends Component {
       <footer className="chatbar">
         <input
           className="chatbar-username"
-          placeholder="Anonymous"
+          placeholder="Type your name and hit ENTER"
           value={username}
           onKeyUp={this.handleNameKeypress.bind(this)}
         />

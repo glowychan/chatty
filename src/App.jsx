@@ -41,14 +41,10 @@ class App extends Component {
 
     this.socket.onmessage = (e) => {
       const data = JSON.parse(e.data);
-      //console.log(data);
-      //console.log(data.onlineCount);
       console.log(data.type);
       console.log(data.count);
       switch(data.type) {
         case "userNotification":
-          //const newCount = this.state.onlineCount(data.count);
-          //this.setState({ count: newCount });
           this.setState({ onlineCount: data.count });
           break;
         case "incomingMessage":
@@ -60,8 +56,7 @@ class App extends Component {
           this.setState({ messages: newNotifications });
           break;
       default:
-        //throw new Error("Unknown event type " + data.type);
-        console.log(data);
+        throw new Error("Unknown event type " + data.type);
       }
     };
   }
