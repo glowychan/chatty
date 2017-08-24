@@ -15,6 +15,9 @@ const server = express()
 // Create the WebSockets server
 const wss = new SocketServer({ server });
 
+// Helper function to pick a color for each user
+const pickColor = require('./colorpicker.js');
+
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.

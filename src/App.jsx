@@ -8,7 +8,7 @@ class App extends Component {
     super(props);
     this.state = {
       onlineCount: 0,
-      currentUser: { name: 'Anonymous' },
+      currentUser: { name: 'Anonymous', color: 'red' },
       messages: []
     };
     this.handleMsgSubmit = this.handleMsgSubmit.bind(this);
@@ -21,7 +21,7 @@ class App extends Component {
       type: "postNotification"
     };
 
-    this.setState({currentUser: {name: name}});
+    this.setState({currentUser: {name: name}}); //color is current color?
 
     this.socket.send(JSON.stringify(message))
   }
@@ -65,7 +65,7 @@ class App extends Component {
     return (
       <div>
         <NavBar countUser={this.state.onlineCount} />
-        <MessageList messages={this.state.messages} />
+        <MessageList messages={this.state.messages} color={this.state.currentUser.color} />
         <ChatBar
           currentUser={this.state.currentUser.name}
           handleNameChange={this.handleNameSubmit}
