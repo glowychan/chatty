@@ -3,7 +3,8 @@ Chatty
 
 A real-time chat application built using modern JavaScript tooling.
 
-
+Final product
+!["Screenshot of main app"](https://github.com/glowychan/chatty/blob/master/docs/01.png)
 
 Install the dependencies and start the server.
 
