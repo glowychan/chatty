@@ -53,6 +53,8 @@ class App extends Component {
           const newNotifications = this.state.messages.concat(data);
           this.setState({ messages: newNotifications });
           break;
+        // case "sendColor":
+        // this.setState({ color: data.color }); but what about the name
       default:
         throw new Error("Unknown event type " + data.type);
       }

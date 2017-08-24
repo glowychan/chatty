@@ -29,6 +29,9 @@ wss.on('connection', (ws) => {
   };
   wss.broadcast(JSON.stringify(onlineCount));
 
+  // let userColor = { color: pickColor(), type: sendColor }
+  // ws.send(userColor) ???
+
   ws.on('message', function incoming(message) {
     let parsedMessage = JSON.parse(message)
     if (parsedMessage.type === 'postMessage') {
